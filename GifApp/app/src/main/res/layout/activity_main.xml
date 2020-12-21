@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/bg">
+
+    <ImageButton
+        android:id="@+id/btnGallery"
+        android:layout_width="239px"
+        android:layout_height="239px"
+        android:src="@drawable/gallery_btn"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnCamera"
+        android:layout_width="239px"
+        android:layout_height="239px"
+        android:src="@drawable/camera_btn"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnPrivacyPolicy"
+        android:layout_width="210px"
+        android:layout_height="70px"
+        android:layout_marginBottom="85px"
+        android:src="@drawable/privacy_policy_btn"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnCamera"
+        app:layout_constraintStart_toStartOf="@+id/btnGallery" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="effects_array">
+        <item>@drawable/effect_1</item>
+        <item>@drawable/effect_2</item>
+        <item>@drawable/effect_3</item>
+        <item>@drawable/effect_4</item>
+        <item>@drawable/effect_5</item>
+        <item>@drawable/effect_6</item>
+        <item>@drawable/effect_7</item>
+    </integer-array>
+
+</resources>

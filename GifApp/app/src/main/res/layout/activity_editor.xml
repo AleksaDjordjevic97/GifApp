@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Editor">
+
+    <FrameLayout
+        android:id="@+id/frmImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="110px"
+        android:layout_marginTop="107px"
+        app:layout_constraintBottom_toTopOf="@+id/imgBottomFooter"
+        app:layout_constraintTop_toTopOf="@id/imgTopFooter">
+
+        <ImageView
+            android:id="@+id/imgSelected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="176dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/imgBottomFooter"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/main_footer"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:id="@+id/imgTopFooter"
+        android:layout_width="match_parent"
+        android:layout_height="107px"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/main_footer"
+        android:scaleType="fitXY"/>
+
+    <ImageButton
+        android:id="@+id/btnEffects"
+        android:layout_width="180px"
+        android:layout_height="110px"
+        android:src="@drawable/btn_effects"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnSave"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/save_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/save_btn"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvEffects"
+        android:layout_width="match_parent"
+        android:layout_height="153px"
+        android:background="@drawable/sub_footer"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/imgBottomFooter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
