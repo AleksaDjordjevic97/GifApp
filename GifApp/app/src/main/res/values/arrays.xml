@@ -11,4 +11,144 @@
         <item>@drawable/effect_7</item>
     </integer-array>
 
+    <integer-array name="effects_icons_array">
+        <item>@drawable/icon_effect_1</item>
+        <item>@drawable/icon_effect_2</item>
+        <item>@drawable/icon_effect_3</item>
+        <item>@drawable/icon_effect_4</item>
+        <item>@drawable/icon_effect_5</item>
+        <item>@drawable/icon_effect_6</item>
+        <item>@drawable/icon_effect_7</item>
+    </integer-array>
+
+    <integer-array name="delay_array">
+        <item>200</item>
+        <item>100</item>
+        <item>100</item>
+        <item>200</item>
+        <item>700</item>
+        <item>700</item>
+        <item>100</item>
+    </integer-array>
+
+    <integer-array name="frames_array">
+        <item>@array/effect_1_frame_array</item>
+        <item>@array/effect_2_frame_array</item>
+        <item>@array/effect_3_frame_array</item>
+        <item>@array/effect_4_frame_array</item>
+        <item>@array/effect_5_frame_array</item>
+        <item>@array/effect_6_frame_array</item>
+        <item>@array/effect_7_frame_array</item>
+    </integer-array>
+
+    <integer-array name="effect_1_frame_array">
+        <item>@drawable/frame1_00</item>
+        <item>@drawable/frame1_01</item>
+        <item>@drawable/frame1_02</item>
+        <item>@drawable/frame1_03</item>
+        <item>@drawable/frame1_04</item>
+        <item>@drawable/frame1_05</item>
+        <item>@drawable/frame1_06</item>
+        <item>@drawable/frame1_07</item>
+    </integer-array>
+
+    <integer-array name="effect_2_frame_array">
+        <item>@drawable/frame2_00</item>
+        <item>@drawable/frame2_01</item>
+        <item>@drawable/frame2_02</item>
+        <item>@drawable/frame2_03</item>
+        <item>@drawable/frame2_04</item>
+        <item>@drawable/frame2_05</item>
+        <item>@drawable/frame2_06</item>
+        <item>@drawable/frame2_07</item>
+        <item>@drawable/frame2_08</item>
+        <item>@drawable/frame2_09</item>
+        <item>@drawable/frame2_10</item>
+        <item>@drawable/frame2_11</item>
+        <item>@drawable/frame2_12</item>
+        <item>@drawable/frame2_13</item>
+        <item>@drawable/frame2_14</item>
+        <item>@drawable/frame2_15</item>
+        <item>@drawable/frame2_16</item>
+        <item>@drawable/frame2_17</item>
+        <item>@drawable/frame2_18</item>
+        <item>@drawable/frame2_19</item>
+        <item>@drawable/frame2_20</item>
+        <item>@drawable/frame2_21</item>
+    </integer-array>
+
+    <integer-array name="effect_3_frame_array">
+        <item>@drawable/frame3_00</item>
+        <item>@drawable/frame3_01</item>
+        <item>@drawable/frame3_02</item>
+        <item>@drawable/frame3_03</item>
+    </integer-array>
+
+    <integer-array name="effect_4_frame_array">
+        <item>@drawable/frame4_00</item>
+        <item>@drawable/frame4_01</item>
+        <item>@drawable/frame4_02</item>
+        <item>@drawable/frame4_03</item>
+        <item>@drawable/frame4_04</item>
+        <item>@drawable/frame4_05</item>
+    </integer-array>
+
+    <integer-array name="effect_5_frame_array">
+        <item>@drawable/frame5_00</item>
+        <item>@drawable/frame5_01</item>
+        <item>@drawable/frame5_02</item>
+        <item>@drawable/frame5_03</item>
+        <item>@drawable/frame5_04</item>
+        <item>@drawable/frame5_05</item>
+        <item>@drawable/frame5_06</item>
+        <item>@drawable/frame5_07</item>
+        <item>@drawable/frame5_08</item>
+    </integer-array>
+
+    <integer-array name="effect_6_frame_array">
+        <item>@drawable/frame6_00</item>
+        <item>@drawable/frame6_01</item>
+        <item>@drawable/frame6_02</item>
+        <item>@drawable/frame6_03</item>
+        <item>@drawable/frame6_04</item>
+        <item>@drawable/frame6_05</item>
+        <item>@drawable/frame6_06</item>
+        <item>@drawable/frame6_07</item>
+        <item>@drawable/frame6_08</item>
+        <item>@drawable/frame6_09</item>
+        <item>@drawable/frame6_10</item>
+        <item>@drawable/frame6_11</item>
+        <item>@drawable/frame6_12</item>
+        <item>@drawable/frame6_13</item>
+        <item>@drawable/frame6_14</item>
+    </integer-array>
+
+    <integer-array name="effect_7_frame_array">
+        <item>@drawable/frame7_00</item>
+        <item>@drawable/frame7_01</item>
+        <item>@drawable/frame7_02</item>
+        <item>@drawable/frame7_03</item>
+        <item>@drawable/frame7_04</item>
+        <item>@drawable/frame7_05</item>
+        <item>@drawable/frame7_06</item>
+        <item>@drawable/frame7_07</item>
+        <item>@drawable/frame7_08</item>
+        <item>@drawable/frame7_09</item>
+        <item>@drawable/frame7_10</item>
+        <item>@drawable/frame7_11</item>
+        <item>@drawable/frame7_12</item>
+        <item>@drawable/frame7_13</item>
+        <item>@drawable/frame7_14</item>
+        <item>@drawable/frame7_15</item>
+        <item>@drawable/frame7_16</item>
+        <item>@drawable/frame7_17</item>
+        <item>@drawable/frame7_18</item>
+        <item>@drawable/frame7_19</item>
+        <item>@drawable/frame7_20</item>
+        <item>@drawable/frame7_21</item>
+        <item>@drawable/frame7_22</item>
+        <item>@drawable/frame7_23</item>
+        <item>@drawable/frame7_24</item>
+    </integer-array>
+
 </resources>

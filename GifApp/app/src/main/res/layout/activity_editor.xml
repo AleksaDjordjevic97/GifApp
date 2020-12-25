@@ -20,7 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="176dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/gifFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
     </FrameLayout>
@@ -72,7 +78,7 @@
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/save_btn"/>
+        android:src="@drawable/back_btn"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvEffects"
