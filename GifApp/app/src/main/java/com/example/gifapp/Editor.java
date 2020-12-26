@@ -12,13 +12,19 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.LruCache;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +45,14 @@ import org.apache.commons.io.IOUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 
 public class Editor extends AppCompatActivity
@@ -55,8 +64,6 @@ public class Editor extends AppCompatActivity
     ViewGroup viewGroup;
     TypedArray effectsArray, effectsIconsArray, frameArArray;
     int selectedFrame;
-
-    LruCache<String, Bitmap> memoryCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,17 +81,6 @@ public class Editor extends AppCompatActivity
         effectsArray = getResources().obtainTypedArray(R.array.effects_array);
         effectsIconsArray = getResources().obtainTypedArray(R.array.effects_icons_array);
         frameArArray = getResources().obtainTypedArray(R.array.frames_array);
-
-        final int maxMemory = (int)  (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8;
-        memoryCache = new LruCache<String, Bitmap>(cacheSize)
-        {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap)
-            {
-                return bitmap.getByteCount() / 1024;
-            }
-        };
 
         Intent getImageIntent = getIntent();
         Uri uri = getImageIntent.getParcelableExtra("SELECTED_IMAGE_URI");
@@ -104,7 +100,9 @@ public class Editor extends AppCompatActivity
 
             try
             {
-                saveImage();
+                ArrayList<Bitmap> bitmapArray;
+                bitmapArray = createBitmapFrameArray();
+                generateGIF(bitmapArray);
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -115,172 +113,7 @@ public class Editor extends AppCompatActivity
         setEffects();
     }
 
-    public void addBitmapToMemoryCache(String key, Bitmap bitmap)
-    {
-        if (getBitmapFromMemCache(key) == null)
-        {
-            memoryCache.put(key, bitmap);
-        }
-    }
 
-    public Bitmap getBitmapFromMemCache(String key)
-    {
-        return memoryCache.get(key);
-    }
-
-
-    private void saveImage() throws Exception
-    {
-//        viewGroup.setDrawingCacheEnabled(true);
-//        viewGroup.buildDrawingCache();
-//        Bitmap bm = viewGroup.getDrawingCache();
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "GIFs_" + timeStamp;
-//        MediaStore.Images.Media.insertImage(getContentResolver(), bm, imageFileName , "This image was made by GIFApp");
-//        viewGroup.setDrawingCacheEnabled(false);
-
-        TypedArray framesArray = getResources().obtainTypedArray(frameArArray.getResourceId(selectedFrame,0));
-        ArrayList<Bitmap> bitmapArrayList = new ArrayList<>();
-
-        imgUser.setDrawingCacheEnabled(true);
-        imgUser.buildDrawingCache();
-        Bitmap bmp1 = imgUser.getDrawingCache();
-
-        for(int i = 0; i < framesArray.length(); i++)
-        {
-            int gifIcon = framesArray.getResourceId(i,0);
-            Bitmap bmp2 = BitmapFactory.decodeResource(getResources(), gifIcon);
-
-
-            Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-            Canvas canvas = new Canvas(bmOverlay);
-            canvas.drawBitmap(bmp1, new Matrix(), null);
-            canvas.drawBitmap(bmp2, new Matrix(), null);
-
-            bitmapArrayList.add(bmOverlay);
-
-            //bmp2.recycle();
-
-        }
-        //bmp1.recycle();
-        Glide.with(this).asGif().load(effectsArray.getResourceId(selectedFrame,0)).into(gifFrame);
-        saveToFile(bitmapArrayList);
-
-
-//        TypedArray framesArray = getResources().obtainTypedArray(frameArArray.getResourceId(selectedFrame,0));
-//        ArrayList<Bitmap> bitmapArrayList = new ArrayList<>();
-//
-//      //  imgUser.setDrawingCacheEnabled(true);
-//      //  imgUser.buildDrawingCache();
-//      //  Bitmap bmp1 = imgUser.getDrawingCache();
-//
-//
-//
-//        for(int i = 0; i < framesArray.length(); i++)
-//        {
-//            viewGroup.setDrawingCacheEnabled(true);
-//            int gifIcon = framesArray.getResourceId(i,0);
-//            //Glide.with(this).asGif().load(gifIcon).into(gifFrame);
-//            gifFrame.setImageResource(gifIcon);
-//            viewGroup.buildDrawingCache();
-//            Bitmap bmp = viewGroup.getDrawingCache();
-//
-//            //addBitmapToMemoryCache(bmp.toString(),bmp);
-//
-//
-//            bitmapArrayList.add(bmp);
-//            bmp.recycle();
-//          //  viewGroup.destroyDrawingCache();
-//          //  viewGroup.setDrawingCacheEnabled(false);
-//
-//        }
-//        Glide.with(this).asGif().load(effectsArray.getResourceId(selectedFrame,0)).into(gifFrame);
-//        saveToFile(bitmapArrayList);
-
-
-    }
-
-    public byte[] generateGIF(ArrayList<Bitmap> bitmaps)
-    {
-        TypedArray delayArray = getResources().obtainTypedArray(R.array.delay_array);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        AnimatedGifEncoder encoder = new AnimatedGifEncoder();
-        encoder.setDelay(delayArray.getResourceId(selectedFrame,0));
-        encoder.setRepeat(0);
-        encoder.start(bos);
-
-        for (Bitmap bitmap : bitmaps)
-        {
-            encoder.addFrame(bitmap);
-        }
-        encoder.finish();
-        return bos.toByteArray();
-
-    }
-
-//    private void saveToFile(ArrayList<Bitmap> bitmaps)
-//    {
-//        FileOutputStream outStream = null;
-//        try
-//        {
-//            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//            String imageFileName = "GIF_" + timeStamp + "_";
-//
-//           File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-//            File image = File.createTempFile(
-//                    imageFileName,
-//                    ".gif",
-//                    storageDir
-//            );
-//
-//
-//            outStream = new FileOutputStream(image);
-//
-//            outStream.write(generateGIF(bitmaps));
-//            outStream.close();
-//            Toast.makeText(getApplicationContext(),"GIF saved successfully!",Toast.LENGTH_SHORT).show();
-//        }catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-
-    private void saveToFile(ArrayList<Bitmap> bitmaps)
-    {
-        FileOutputStream outStream = null;
-        try
-        {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String imageFileName = "GIF_" + timeStamp + "_";
-
-            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-           // File storageDir = getFilesDir();
-            File image = File.createTempFile(
-                    imageFileName,
-                    ".gif",
-                    storageDir
-            );
-
-            outStream = new FileOutputStream(image);
-            outStream.write(generateGIF(bitmaps));
-            outStream.close();
-
-
-            final ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "Image" + System.currentTimeMillis());
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/gif");
-            final Uri gifContentUri = getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-            OutputStream outputStream = getApplicationContext().getContentResolver().openOutputStream(gifContentUri, "w");
-            IOUtils.copy(new FileInputStream(image), outputStream);
-
-
-            Toast.makeText(getApplicationContext(),"GIF saved successfully!",Toast.LENGTH_SHORT).show();
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 
     private void showhideEffects()
     {
@@ -342,4 +175,75 @@ public class Editor extends AppCompatActivity
             effect = view.findViewById(R.id.gif_cell);
         }
     }
+
+    private ArrayList<Bitmap> createBitmapFrameArray()
+    {
+
+        TypedArray framesArray = getResources().obtainTypedArray(frameArArray.getResourceId(selectedFrame,0));
+        ArrayList<Bitmap> bitmapArrayList = new ArrayList<>();
+
+        for(int i = 0; i < framesArray.length(); i++)
+        {
+
+            int gifIcon = framesArray.getResourceId(i,0);
+            gifFrame.setImageResource(gifIcon);
+
+            DisplayMetrics dm = getApplicationContext().getApplicationContext().getResources().getDisplayMetrics();
+            viewGroup.measure(View.MeasureSpec.makeMeasureSpec(dm.widthPixels, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(dm.heightPixels, View.MeasureSpec.EXACTLY));
+            viewGroup.layout(0, 0, viewGroup.getMeasuredWidth(), viewGroup.getMeasuredHeight());
+            Bitmap returnedBitmap = Bitmap.createBitmap(viewGroup.getMeasuredWidth(),
+                    viewGroup.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(returnedBitmap);
+            viewGroup.draw(c);
+
+
+            bitmapArrayList.add(returnedBitmap);
+
+        }
+        Glide.with(this).asGif().load(effectsArray.getResourceId(selectedFrame,0)).into(gifFrame);
+
+        return bitmapArrayList;
+
+    }
+
+    public void generateGIF(ArrayList<Bitmap> bitmaps) throws Exception
+    {
+
+        AnimatedGIFWriter writer = new AnimatedGIFWriter(false);
+        OutputStream os = null;
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "GIF_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".gif",
+                storageDir
+        );
+
+        os = new FileOutputStream(image);
+
+        writer.prepareForWrite(os, -1, -1);
+
+        for(Bitmap bitmap : bitmaps)
+            writer.writeFrame(os, bitmap);
+
+        writer.finishWrite(os);
+
+        os.close();
+
+
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "Image" + System.currentTimeMillis()+".gif");
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/gif");
+        final Uri gifContentUri = getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        OutputStream outputStream = getApplicationContext().getContentResolver().openOutputStream(gifContentUri, "w");
+        IOUtils.copy(new FileInputStream(image), outputStream);
+
+
+        Toast.makeText(getApplicationContext(),"GIF saved successfully!",Toast.LENGTH_SHORT).show();
+
+    }
+
 }
