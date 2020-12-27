@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -231,11 +232,14 @@ public class Editor extends AppCompatActivity
 
         writer.finishWrite(os);
 
+
+
         os.close();
 
 
         final ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "Image" + System.currentTimeMillis()+".gif");
+        contentValues.put(MediaStore.MediaColumns.DATA,"/storage/emulated/0/Pictures/Image." + System.currentTimeMillis() + ".gif");
+       // contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "Image" + System.currentTimeMillis()+".gif");
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/gif");
         final Uri gifContentUri = getApplicationContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
         OutputStream outputStream = getApplicationContext().getContentResolver().openOutputStream(gifContentUri, "w");
