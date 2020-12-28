@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.gifapp"
+        applicationId "com.example.gifappv1"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

@@ -1,4 +1,4 @@
-package com.example.gifapp;
+package com.example.gifappv1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;

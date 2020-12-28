@@ -1,7 +1,6 @@
-package com.example.gifapp;
+package com.example.gifappv1;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,21 +9,13 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.util.LruCache;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,27 +24,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 
 import org.apache.commons.io.IOUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 
 public class Editor extends AppCompatActivity
@@ -103,7 +84,21 @@ public class Editor extends AppCompatActivity
             {
                 ArrayList<Bitmap> bitmapArray;
                 bitmapArray = createBitmapFrameArray();
-                generateGIF(bitmapArray);
+//                generateGIF(bitmapArray);
+
+                AsyncTask.execute(() ->
+                {
+                    try
+                    {
+                        generateGIF(bitmapArray);
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                });
+
+                Toast.makeText(getApplicationContext(),"GIF saved successfully!",Toast.LENGTH_SHORT).show();
+
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -246,7 +241,7 @@ public class Editor extends AppCompatActivity
         IOUtils.copy(new FileInputStream(image), outputStream);
 
 
-        Toast.makeText(getApplicationContext(),"GIF saved successfully!",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(),"GIF saved successfully!",Toast.LENGTH_SHORT).show();
 
     }
 
