@@ -24,7 +24,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.gifsapp.fileprovider"
+            android:authorities="com.example.gifappv1.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

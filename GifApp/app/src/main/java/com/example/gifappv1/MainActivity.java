@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         if (photoFile != null)
         {
             Uri photoURI = FileProvider.getUriForFile(this,
-                    "com.example.gifsapp.fileprovider",
+                    "com.example.gifappv1.fileprovider",
                     photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, SELECT_IMAGE_CAMERA);

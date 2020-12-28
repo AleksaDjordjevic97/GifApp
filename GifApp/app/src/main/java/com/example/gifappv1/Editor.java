@@ -222,8 +222,11 @@ public class Editor extends AppCompatActivity
 
         writer.prepareForWrite(os, -1, -1);
 
+        TypedArray delayArray = getResources().obtainTypedArray(R.array.delay_array);
+        int delay = delayArray.getResourceId(selectedFrame,0);
+
         for(Bitmap bitmap : bitmaps)
-            writer.writeFrame(os, bitmap);
+            writer.writeFrame(os, bitmap,delay);
 
         writer.finishWrite(os);
 
